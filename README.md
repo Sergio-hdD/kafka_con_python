@@ -1,7 +1,7 @@
 # Primer proyecto Kafka con Python
 
 ## Correr aplicación
-### 1- Kafka: para los pasos 1 y 2, que implican ejecutar comando/s en terminal, previamente se debe acceder hasta la carpeta principal de Kafka
+### 1- Kafka: para los pasos 1A y 1B, que implican ejecutar comando/s en terminal, previamente se debe acceder hasta la carpeta principal de Kafka
 1A- En una terminal levantar el zookeeper con
 ```bash
 .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
