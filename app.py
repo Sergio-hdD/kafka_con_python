@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g, redirect, url_for
+from flask import Flask
 from flask_cors import CORS
 
 # Para la creacion del topic 
@@ -10,7 +10,8 @@ app = Flask(__name__)
 CORS(app)
 
 admin_client = KafkaAdminClient(bootstrap_servers="localhost:9092", client_id="prueba", api_version=(0, 10, 1))
-username = 'username_5'
+
+topic_name = 'idProduc_topic_9'
 
 
 @app.route('/', methods=['GET'])
@@ -19,73 +20,69 @@ def hello():
 
 @app.route('/new_topic', methods=['GET','POST'])
 def create_topic():
-	# Creacion del topic para notificaciones (Donde escriben los likes y seguidores nuevos)
-	tl2 = []
-	topic_notif = username + '_notificaciones'
-	tl2.append(NewTopic(name=topic_notif, num_partitions=1, replication_factor=1))
-	admin_client.create_topics(new_topics=tl2, validate_only=False)
+	# Creacion del topic
+	topicsList = []
+	topicsList.append(NewTopic(name=topic_name, num_partitions=1, replication_factor=1))
+	admin_client.create_topics(new_topics=topicsList, validate_only=False)
 
-	return 'new_topic'
+	return 'new topic '+topic_name
 
 
 @app.route('/new_partition' , methods=['GET','POST'])
 def create_partition():
-	username = 'Sergio'
-	# Creacion de la particion dentro del topic/usuario
+	# Creacion de la particion dentro del topic
+#	producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer=json_serializer)
+#	producer.send(topic_name, "otro mensaje")
+#	producer.close()
+
+	return 'new partition metodo anulado porque en realidad generaba otro topic/mensaje'
+
+@app.route('/add_message', methods=['POST'])
+def create_message_to_topic():
+	nombre_producto = 'product_1'
+	cliente_nombre = 'client_name'
+	importe = 1000
+	# Se agrega el mensaje al topic 
 	producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer=json_serializer)
-	producer.send(username, 1)
+	producer.send(topic_name, f"El cliente {cliente_nombre} ofrecre {importe} por el producto {nombre_producto}")
 	producer.close()
 
-	return 'new_partition'
-
-@app.route('/new_message_notification', methods=['POST'])
-def create_notification():
-	nombre = 'name_current_user'
-	titulo = '_title_publicacion'
-	autor = username # Nombre del usuario que creo el post
-	topic_notif = autor + '_notificaciones'	# Topic del autor donde notifica
-
-	producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer=json_serializer)
-	producer.send(topic_notif, f"A {nombre} le gusto tu publicacion: {titulo}")
-	producer.close()
-
-	return topic_notif
+	return 'added message to '+topic_name
 
 
-@app.route('/get_notifications', methods=['GET'])
-def notifications():
-	notis = get_notificaciones()[::-1]
-	print(notis)
-	return 'notis'
+@app.route('/get_topics', methods=['GET'])
+def getListTopics():
+	list_topics = get_listTopics()[::-1]
+	print(list_topics)
+	return 'topics'
 
-def get_notificaciones():
-	# Topic con las notificaciones del usuario logueado
-	notificaciones = []
-	topic_notif = username + '_notificaciones'
+def get_listTopics():
+	listTopics = []
 
-	consumer_notificaciones = KafkaConsumer(bootstrap_servers=['localhost:9092'], consumer_timeout_ms=1000)
+	consumer_listTopics = KafkaConsumer(bootstrap_servers=['localhost:9092'], consumer_timeout_ms=1000)
 
-	# Topic del propio usuario para saber si alguien le dio like o lo sigue 
-	notificaciones.append(topic_notif)
-	tp_usr = TopicPartition(topic=topic_notif, partition=0)
+	# se trae el topic para saber si hubo cambios 
+	listTopics.append(topic_name)
+	one_topic = TopicPartition(topic=topic_name, partition=0)
 
-	consumer_notificaciones.assign([tp_usr])			# Asigna el topic al consumidor
+	consumer_listTopics.assign([one_topic])			# Asigna el topic al consumidor
 
-	consumer_notificaciones.seek_to_end(tp_usr)			# Busca el final de la lista
-	fin = consumer_notificaciones.position(tp_usr)		# Guarda la posicion del ultimo registro
-	consumer_notificaciones.seek_to_beginning(tp_usr)	# Vuelve al inicio de la lista
+	consumer_listTopics.seek_to_end(one_topic)			# Busca el final de la lista
+	fin = consumer_listTopics.position(one_topic)		# Guarda la posicion del ultimo registro
+	consumer_listTopics.seek_to_beginning(one_topic)	# Vuelve al inicio de la lista
 
 	# Lista para guardar los registros traidos de kafka
-	nt = []
+	listRegisterTopics = []
 	i = 1
-	for notificacion in consumer_notificaciones:		# Itera entre todos los registros del topic seleccionado
-#		print(notificacion)
-		nt.append('Mensaje numero '+str(i)+' --> '+str(notificacion.value))							# Agrega en la lista todos los registros del topic
-		if fin == notificacion.offset:					# Sale del for cuando llega al final de la lista y no espera por nuevos mensajes
+	for topic in consumer_listTopics:		# Itera entre todos los registros (mensajes) del topic seleccionado
+#		print(topic)
+#       print('Mensaje numero '+str(i)+' --> '+str(topic.value))
+		listRegisterTopics.append(topic)		# Agrega en la lista todos los registros del topic
+		if fin == topic.offset:					# Sale del for cuando llega al final de la lista y no espera por nuevos mensajes
 			break
 		i += 1
-	consumer_notificaciones.close()
-	return nt
+	consumer_listTopics.close()
+	return listRegisterTopics
 	
 def json_serializer(data):
     return json.dumps(data).encode("utf-8")

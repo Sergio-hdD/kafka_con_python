@@ -26,10 +26,10 @@ http://localhost:5000/new_partition
 ```
 3C- Agregar uno o varios mensajes al topic que se crea - methods=['POST']... por cada ejecución de este método se agrega un mensaje.
 ```bash
-http://localhost:5000/new_message_notification
+http://localhost:5000/add_message
 ```
 3D- Traer topics - methods=['GET']
 ```bash
-http://localhost:5000/get_notifications
+http://localhost:5000/get_topics
 ```
 
