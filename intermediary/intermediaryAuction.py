@@ -36,7 +36,7 @@ class IntermediaryAuction():
         else:
             return GeneralFunctions.response_for_error('No se agrega la oferta, ya que no existe subasta para el producto')
 
-    def get_list_messages_topic():
+    def get_list_messages_topic_auction():
         topic_name = BASE_AUCTION_PRODUCT+str(request.json['id_product'])
         list_messages = KafkaFunctions.find_list_messages_topic(topic_name)[::-1]
         #print(list_messages)
@@ -58,7 +58,7 @@ class IntermediaryAuction():
 
     def validaciones_and_mensajes_de_la_subasta(auction, topic_name):
         if( auction['end_date'] > datetime.now() ): 
-            print(" id_user_last_offer ", auction['id_user_last_offer'])
+            #print(" id_user_last_offer ", auction['id_user_last_offer'])
             if(auction['id_user_last_offer'] == None): #si es la primera  ofertas (nadie ha hecho una oferta 
                 return IntermediaryAuction.validacion_y_agregar_primer_oferta(auction, topic_name)
             elif( request.json['amount_offered'] > auction['last_amount_offered'] ): #Si no es la primera oferta y supera la última oferta

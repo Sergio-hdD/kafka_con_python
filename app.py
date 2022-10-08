@@ -1,12 +1,29 @@
 from importsAndConfigsApp import app
 from intermediary.intermediaryAuction import IntermediaryAuction
+from intermediary.intermediaryProduct import IntermediaryProduct
+from flask import request
 
 
 @app.route('/', methods=['GET'])
 def hello():
     return "Service (OK)"
 
-#********* uaction *********
+#********* fin Punto 1 product *********
+@app.route('/new_topic_to_product_new', methods=['POST'])
+def new_topic_new_product():
+	return IntermediaryProduct.new_topic_product()
+
+@app.route('/add_message_update_product', methods=['POST'])
+def new_message_update_product(): 
+	return IntermediaryProduct.add_message_to_topic_product()
+
+@app.route('/get_messages_topic_product', methods=['GET'])
+def get_list_messages_topic_product():
+	return IntermediaryProduct.get_list_messages_topic_product()
+#********* fin Punto 1 product *********
+
+
+#********* Punto 2 y 3 auction *********
 @app.route('/new_topic_auction', methods=['POST'])
 def new_topic_offer():
 	return IntermediaryAuction.new_topic_offer()
@@ -16,9 +33,9 @@ def add_message_offer_to_topic():
 	return IntermediaryAuction.add_message_offer_to_topic()
 
 @app.route('/get_messages_topic_auction', methods=['GET'])
-def get_list_messages_topic():
-	return IntermediaryAuction.get_list_messages_topic()
-#********* fin uaction *********
+def get_list_messages_topic_auction():
+	return IntermediaryAuction.get_list_messages_topic_auction()
+#********* fin Punto 2 auction *********
 
 
 

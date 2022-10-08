@@ -20,9 +20,47 @@ python app.py
 ```bash
 http://localhost:5000
 ```
-### 3B- Métodos de Auctions 
+### 3B- Métodos de Products (Punto 1 del TP)
 
-- Crear un topic - methods=['POST']
+- Crear un topic por alta de un producto - methods=['POST']
+```bash
+http://localhost:5000/new_topic_to_product_new
+
+Body
+{
+	"id_product": 22,
+	"old_name": "name_product_1",
+	"old_price": 577
+}
+```
+
+- Agregar (por modificación) uno o varios mensajes al topic que se crea para un producto - methods=['POST']... por cada ejecución de este método se agrega un mensaje.
+```bash
+http://localhost:5000/add_message_update_product
+
+Body
+{
+	"id_product": 22,
+	"old_name": "name_product_1",
+	"new_name": "new_name_product_1",
+	"old_price": 577,
+	"new_price": 700,
+	"edition_date": "2022-10-7"
+}
+```
+- Traer mensajes del topic del producto - methods=['GET']
+```bash
+http://localhost:5000/get_messages_topic_product
+
+Body
+{
+	"id_product": 22
+}
+```
+
+### 3C- Métodos de Auctions (Puntos 2 y 3, del TP)
+
+- Crear un topic por subasta iniciada - methods=['POST']
 ```bash
 http://localhost:5000/new_topic_auction
 
@@ -35,7 +73,7 @@ Body
 }
 ```
 
-- Agregar uno o varios mensajes al topic que se crea - methods=['POST']... por cada ejecución de este método se agrega un mensaje.
+- Agregar uno o varios mensajes al topic de subasta que se crea - methods=['POST']... por cada ejecución de este método se agrega un mensaje.
 ```bash
 http://localhost:5000/add_offer
 
@@ -48,7 +86,7 @@ Body
 
 ```
 
-- Traer topics - methods=['GET']
+- Traer mensajes del topic de la subasta - methods=['GET']
 ```bash
 http://localhost:5000/get_messages_topic_auction
 
