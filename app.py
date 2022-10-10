@@ -2,6 +2,7 @@ from importsAndConfigsApp import app
 from intermediary.intermediaryAuction import IntermediaryAuction
 from intermediary.intermediaryProduct import IntermediaryProduct
 from intermediary.intermediaryCart import IntermediaryCart
+from intermediary.intermediaryBilling import IntermediaryBilling
 from flask import request
 
 
@@ -52,6 +53,15 @@ def get_list_messages_topic_cart():
 	return IntermediaryCart.get_list_messages_topic_cart()
 #********* Fin punto 5 cart *********
 
+#********* Punto 6 cart *********
+@app.route('/new_topic_bill', methods=['POST'])
+def new_topic_bill():
+	return IntermediaryBilling.new_topic_bill()
+
+@app.route('/get_messages_topic_bill', methods=['GET'])
+def get_list_messages_topic_bill():
+	return IntermediaryBilling.get_list_messages_topic_bill()
+#********* Fin punto 6 cart *********
 
 
 if __name__=='__main__':
