@@ -95,4 +95,45 @@ Body
 	"id_product": 57
 }
 ```
+### 5 - Métodos de Carrito (Puntos 5 del TP)
 
+- Crear un nuevo carrito - methods=['POST']
+```bash
+http://localhost:5000/new_topic_cart
+
+Body
+{
+    "id_cart":12,
+    "id_buyer":1,
+    "id_seller":1,
+    "id_product":31,
+    "product_name":"Jabon",
+    "price":700,
+    "amount":5
+}
+```
+
+- Añadir nuevo mensaje al topico carrito - methods=['POST']
+```bash
+http://localhost:5000/add_message_cart
+
+Body
+{
+    "id_cart":12,
+    "id_seller":1,
+    "id_product":12,
+    "product_name":"Jabon",
+    "price":700,
+    "amount":2
+}
+```
+
+- Traer todos los mensajes del topico carrito - methods=['GET']
+```bash
+http://localhost:5000/get_messages_topic_cart
+
+Body
+{
+    "id_cart":12
+}
+```

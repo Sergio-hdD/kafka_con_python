@@ -11,6 +11,8 @@ class IntermediaryCart():
         cart["id_buyer"] = request.json["id_buyer"]
         cart["id_seller"] = request.json["id_seller"]
         cart["id_product"] = request.json["id_product"]
+        cart["product_name"] = request.json["product_name"]
+        cart["price"] = request.json["price"]
         cart["amount"] = request.json["amount"]
         # check if the product has an auction
         list_messages = KafkaFunctions.find_list_messages_topic(BASE_AUCTION_PRODUCT+str(cart["id_product"]))[::-1]
@@ -25,6 +27,8 @@ class IntermediaryCart():
         product = {}
         product["id_product"] = request.json["id_product"]
         product["id_seller"] = request.json["id_seller"]
+        product["product_name"] = request.json["product_name"]
+        product["price"] = request.json["price"]
         product["amount"] = request.json["amount"]
         return KafkaFunctions.add_message_topic(topic_name, product, "Producto agregado correctamente") #agrego un producto
 
