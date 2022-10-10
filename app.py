@@ -1,6 +1,7 @@
 from importsAndConfigsApp import app
 from intermediary.intermediaryAuction import IntermediaryAuction
 from intermediary.intermediaryProduct import IntermediaryProduct
+from intermediary.intermediaryCart import IntermediaryCart
 from flask import request
 
 
@@ -37,9 +38,23 @@ def get_list_messages_topic_auction():
 	return IntermediaryAuction.get_list_messages_topic_auction()
 #********* fin Punto 2 auction *********
 
+#********* Punto 5 cart *********
+@app.route('/new_topic_cart', methods=['POST'])
+def new_topic_cart():
+	return IntermediaryCart.new_topic_cart()
+
+@app.route('/add_message_cart', methods=['POST'])
+def new_message_cart(): 
+	return IntermediaryCart.add_message_to_topic_cart()
+
+@app.route('/get_messages_topic_cart', methods=['GET'])
+def get_list_messages_topic_cart():
+	return IntermediaryCart.get_list_messages_topic_cart()
+#********* Fin punto 5 cart *********
+
 
 
 if __name__=='__main__':
-	app.run() 
+	app.run(debug=True) 
 	# app.run(debug=True) hace que rinicie luego de un cambio usando "python app.py" 
 	# otra opción, app.run(), es correrlo con "pymon app.py", pero solo se actualiza por cambios en app.py y no en otro archivo 
