@@ -1,6 +1,6 @@
 DB_USER = "root" 
 
-DB_PASSWORD = ""
+DB_PASSWORD = "root"
 
 DATABASE_NAME = "prueba_punto_2"
 

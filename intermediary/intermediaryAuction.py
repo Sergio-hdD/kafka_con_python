@@ -1,3 +1,4 @@
+from importsAndConfigsApp import app
 from datetime import datetime
 from schemas.auctionSchema import AuctionSchema
 from generalFunctions import GeneralFunctions
@@ -7,8 +8,8 @@ from flask import request
 from constants import BASE_AUCTION_PRODUCT
 
 db = AuctionEntity.prepare_table_auction_and_get_db()
-
-db.create_all() #creo todas las tablas (en este caso 1)
+with app.app_context():
+    db.create_all() #creo todas las tablas (en este caso 1)
 
 auction_schema = AuctionSchema() #Instanciamos para poder iteractuar con bd para ABM de uno
 auctions_schemas = AuctionSchema(many=True) #Para varios/muchos
