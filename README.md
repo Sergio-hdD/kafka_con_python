@@ -137,3 +137,27 @@ Body
     "id_cart":12
 }
 ```
+
+### 6 - Métodos de Facturacion (Puntos 6, 7 y 8 del TP)
+
+- Crear una nueva factura - methods=['POST']
+```bash
+http://localhost:5000/new_topic_bill
+
+Body
+{
+    "id_bill":2,
+    "id_cart":1,
+    "date_issue":"10-10-2022"    
+}
+```
+
+- Traer los mensajes del topico bill - methods=['GET']
+```bash
+http://localhost:5000/get_messages_topic_bill
+
+Body
+{
+    "id_bill":2
+}
+```
