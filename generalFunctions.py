@@ -19,6 +19,13 @@ class GeneralFunctions():
         
         return datetime(year, month, day)
 
+    def stringDate_to_datetime(str_date):
+        year = int(str_date.split("-")[0])
+        month = int(str_date.split("-")[1])
+        day = int(str_date.split("-")[2])
+        
+        return datetime(year, month, day)
+
     def json_serializer(data):
         return json.dumps(data).encode("utf-8")
 

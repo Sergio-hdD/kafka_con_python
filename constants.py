@@ -1,6 +1,6 @@
 DB_USER = "root" 
 
-DB_PASSWORD = "root"
+DB_PASSWORD = ""
 
 DATABASE_NAME = "prueba_punto_2"
 
@@ -16,4 +16,4 @@ CLIENT_ID = 'retro_shop'
 
 API_VERSION = (1, 0, 0)
 
-URL_GRPC_CLIENT = 'http://127.0.0.1:5050'
+URL_GRPC_CLIENT = 'http://localhost:5001'
