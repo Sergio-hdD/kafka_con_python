@@ -63,6 +63,9 @@ def get_list_messages_topic_bill():
 	return IntermediaryBilling.get_list_messages_topic_bill()
 #********* Fin punto 6 cart *********
 
+@app.route('/add_messagge_bill', methods=['POST'])
+def add_messagge_bill():
+	 return IntermediaryBilling.new_bill_bd()
 
 if __name__=='__main__':
 	app.run(debug=True) 
