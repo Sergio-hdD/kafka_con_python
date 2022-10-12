@@ -5,6 +5,7 @@ class IntermediaryProduct():
 
     def new_topic_product():
         topic_name = str(request.json['id_product'])
+        print(request.json)
         product = {}
         product["old_name"] = request.json["old_name"]
         product["old_price"] = request.json["old_price"]

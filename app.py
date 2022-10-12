@@ -5,6 +5,7 @@ from intermediary.intermediaryCart import IntermediaryCart
 from intermediary.intermediaryBilling import IntermediaryBilling
 from generalFunctions import GeneralFunctions
 from flask import request
+from flask_cors import cross_origin
 
 
 @app.route('/', methods=['GET'])
@@ -13,6 +14,7 @@ def hello():
 
 #********* fin Punto 1 product *********
 @app.route('/new_topic_to_product_new', methods=['POST'])
+@cross_origin()
 def new_topic_new_product():
 	username = str(request.json['username'])
 	response = 'No puede publicar un producto siendo Monitor'
