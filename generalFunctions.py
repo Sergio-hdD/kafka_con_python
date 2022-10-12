@@ -1,5 +1,7 @@
 from datetime import datetime
 import json
+import requests
+from constants import URL_GRPC_CLIENT, URL_REST_SERVER
 
 class GeneralFunctions():
 
@@ -32,5 +34,26 @@ class GeneralFunctions():
     def base_auction_product():
         return 'auction_product_' 
 
+    def isMonitor(username):
+        validate = False
+
+        res = requests.post(URL_GRPC_CLIENT+'/findUserByUsername', json={
+            "username" : "admin",
+            "password" : "admin",
+            "usernameToFind" : username
+        })
+        if(json.loads(res.content)['user'] != {} and json.loads(res.content)['user']['role'] == 'MONITOR'):
+            validate = True
+
+        return validate
+
+    def getUserById(id):
+        res = requests.get(URL_REST_SERVER+'/api/users/byId', json={
+            "id" : id
+        })
+
+        return json.loads(res.content)
+
+        
 
 GeneralFunctions()
